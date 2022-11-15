@@ -12,6 +12,7 @@ const BoardWrite = () => {
   const [Pet, setPet] = useState(0);
   const [contents, setcontents] = useState();
   const [Cate, setCate] = useState("0");
+  const formoon = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
   console.log(ImgPreview.length);
 
@@ -60,7 +61,7 @@ const BoardWrite = () => {
           console.log(Response.request.httpRequest.path);
           const ImgURL = S3URL + Response.request.httpRequest.path;
           setFileLink(ImgURL);
-          setImgPreview([...ImgPreview, ImgURL]);
+          setImgPreview([...ImgPreview, { ImgURL }]);
         })
         .send((err) => {
           if (err) console.log(err);
@@ -70,83 +71,10 @@ const BoardWrite = () => {
     }
   };
 
-  // 카테고리 선택박스 //
-  // let cate_parent = [
-  //   { c: "category1", v: "0", t: "카테고리를 선택해주세요." },
-  //   { c: "category1", v: "1", t: "카테고리1" },
-  //   { c: "category1", v: "2", t: "카테고리2" },
-  // ];
-
-  // let cate_child_1 = [
-  //   { c: "category2", v: "1", t: "카테고리1번의 항목1" },
-  //   { c: "category2", v: "2", t: "카테고리1번의 항목2" },
-  //   { c: "category2", v: "3", t: "카테고리1번의 항목3" },
-  // ];
-
-  // let cate_child_2 = [
-  //   { c: "category2", v: "1", t: "카테고리2번의 항목1" },
-  //   { c: "category2", v: "2", t: "카테고리2번의 항목2" },
-  //   { c: "category2", v: "3", t: "카테고리2번의 항목3" },
-  // ];
-  // const loadCateParent = () => {
-  //   let h = [];
-  //   cate_parent.forEach((item) => {
-  //     h.push(
-  //       '<option name="' +
-  //         item.c +
-  //         '" value="' +
-  //         item.v +
-  //         '">' +
-  //         item.t +
-  //         "</option>"
-  //     );
-  //   });
-  //   document.getElementById("cate_parent").innerHTML = h.join("");
-  // };
-  // useEffect(() => {
-  //   loadCateParent();
-  // }, []);
-  // const loadCateChild = () => {
-  //   let test = "onChange={onCategoryHandler}";
-  //   let parent_cate = document.getElementById("cate_parent").value;
-  //   let h = [];
-  //   if (parent_cate === "") {
-  //   } else {
-  //     if (parent_cate === "1") {
-  //       cate_child_1.forEach((item) => {
-  //         h.push(
-  //           '<option name="' +
-  //             item.c +
-  //             '" value="' +
-  //             item.v +
-  //             '"' +
-  //             test +
-  //             ">" +
-  //             item.t +
-  //             "</option>"
-  //         );
-  //       });
-  //     } else if (parent_cate === "2") {
-  //       cate_child_2.forEach((item) => {
-  //         h.push(
-  //           '<option onChange={onCategoryHandler} name="' +
-  //             item.c +
-  //             '" value="' +
-  //             item.v +
-  //             '">' +
-  //             item.t +
-  //             "</option>"
-  //         );
-  //       });
-  //     }
-  //   }
-  //   document.getElementById("cate_child").innerHTML = h.join("");
-  // };
-  // 여기까지 카테고리 선택박스 //
-
   const PetHandler = () => {
     Pet == 1 ? setPet(0) : setPet(1);
   };
+
   const onChangeDataHandler = (e) => {
     const { name, value } = e.target;
     setcontents({
@@ -154,6 +82,7 @@ const BoardWrite = () => {
       [name]: value,
     });
   };
+
   const onCategoryHandler = (e) => {
     const { name, value } = e.target;
     setcontents({
@@ -161,8 +90,8 @@ const BoardWrite = () => {
       [name]: value,
     });
   };
+
   const Categoryopen = (e) => {
-    console.log(e);
     const { name, value } = e.target;
     setCate(value);
     setcontents({
@@ -172,18 +101,35 @@ const BoardWrite = () => {
   };
 
   console.log(contents);
-  const onSubmitHandler = () => {
-    dispatch(__postBoard({}));
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+    dispatch(
+      __postBoard({
+        title: contents?.title,
+        content: contents?.content,
+        local: contents?.category1,
+        localdetail: contents?.category2,
+        mediaList: ImgPreview,
+        pet: Pet,
+      })
+    );
+  };
+
+  const Imageremove = (e) => {
+    console.log(e.target.src);
+    setImgPreview(ImgPreview.filter((el) => el.ImgURL !== e.target.src));
   };
 
   console.log(
-    contents.title,
-    contents.content,
-    contents.category1,
-    contents.category2,
-    ImgPreview
+    contents?.title,
+    contents?.content,
+    contents?.category1,
+    contents?.category2,
+    ImgPreview,
+    Pet
   );
 
+  console.log(ImgPreview);
   return (
     <BoardWriteContainer onSubmit={onSubmitHandler}>
       <BoardWriteWrap>
@@ -221,10 +167,19 @@ const BoardWrite = () => {
                   카테고리를 선택해주세요.
                 </option>
                 <option name="category1" value="1">
-                  카테고리1
+                  수도권
                 </option>
                 <option name="category1" value="2">
-                  카테고리2
+                  경상_강원도
+                </option>
+                <option name="category1" value="3">
+                  충청_전라도
+                </option>
+                <option name="category1" value="4">
+                  제주도
+                </option>
+                <option name="category1" value="5">
+                  기타
                 </option>
               </CategorySelect>
               <CategorySelect
@@ -236,26 +191,131 @@ const BoardWrite = () => {
                 {Cate == 1 && (
                   <>
                     <option name="category2" value="1">
-                      카테고리1번의 항목1
+                      서울
                     </option>
                     <option name="category2" value="2">
-                      카테고리1번의 항목2
+                      인천
                     </option>
                     <option name="category2" value="3">
-                      카테고리1번의 항목3
+                      가평
+                    </option>
+                    <option name="category2" value="4">
+                      용인
+                    </option>
+                    <option name="category2" value="5">
+                      파주
+                    </option>
+                    <option name="category2" value="33">
+                      기타
                     </option>
                   </>
                 )}
                 {Cate == 2 && (
                   <>
-                    <option name="category2" value="1">
-                      카테고리2번의 항목1
+                    <option name="category2" value="6">
+                      속초
                     </option>
-                    <option name="category2" value="2">
-                      카테고리2번의 항목2
+                    <option name="category2" value="7">
+                      강릉
                     </option>
-                    <option name="category2" value="3">
-                      카테고리2번의 항목3
+                    <option name="category2" value="8">
+                      춘천
+                    </option>
+                    <option name="category2" value="9">
+                      양양
+                    </option>
+                    <option name="category2" value="10">
+                      평창
+                    </option>
+                    <option name="category2" value="11">
+                      부산
+                    </option>
+                    <option name="category2" value="12">
+                      거제
+                    </option>
+                    <option name="category2" value="13">
+                      통영
+                    </option>
+                    <option name="category2" value="14">
+                      포항
+                    </option>
+                    <option name="category2" value="15">
+                      경주
+                    </option>
+                    <option name="category2" value="16">
+                      안동
+                    </option>
+                    <option name="category2" value="33">
+                      기타
+                    </option>
+                  </>
+                )}
+                {Cate == 3 && (
+                  <>
+                    <option name="category2" value="17">
+                      여수
+                    </option>
+                    <option name="category2" value="18">
+                      목포
+                    </option>
+                    <option name="category2" value="19">
+                      담양
+                    </option>
+                    <option name="category2" value="20">
+                      보성
+                    </option>
+                    <option name="category2" value="21">
+                      해남
+                    </option>
+                    <option name="category2" value="22">
+                      전주
+                    </option>
+                    <option name="category2" value="23">
+                      천안
+                    </option>
+                    <option name="category2" value="24">
+                      태안
+                    </option>
+                    <option name="category2" value="25">
+                      보령
+                    </option>
+                    <option name="category2" value="26">
+                      공주
+                    </option>
+                    <option name="category2" value="27">
+                      단양
+                    </option>
+                    <option name="category2" value="33">
+                      기타
+                    </option>
+                  </>
+                )}
+                {Cate == 4 && (
+                  <>
+                    <option name="category2" value="32">
+                      서귀포
+                    </option>
+                    <option name="category2" value="33">
+                      기타
+                    </option>
+                  </>
+                )}
+                {Cate == 5 && (
+                  <>
+                    <option name="category2" value="28">
+                      대구
+                    </option>
+                    <option name="category2" value="29">
+                      대전
+                    </option>
+                    <option name="category2" value="30">
+                      광주
+                    </option>
+                    <option name="category2" value="31">
+                      울산
+                    </option>
+                    <option name="category2" value="33">
+                      기타
                     </option>
                   </>
                 )}
@@ -268,46 +328,14 @@ const BoardWrite = () => {
           </CategoryWrap>
         </ImegeCategoryBox>
         <ImegePreviewBox>
-          <UploadImegePreview
-            src={ImgPreview[0] ? ImgPreview[0] : DefaultImega}
-            alt=""
-          />
-          <UploadImegePreview
-            src={ImgPreview[1] ? ImgPreview[1] : DefaultImega}
-            alt=""
-          />
-          <UploadImegePreview
-            src={ImgPreview[2] ? ImgPreview[2] : DefaultImega}
-            alt=""
-          />
-          <UploadImegePreview
-            src={ImgPreview[3] ? ImgPreview[3] : DefaultImega}
-            alt=""
-          />
-          <UploadImegePreview
-            src={ImgPreview[4] ? ImgPreview[4] : DefaultImega}
-            alt=""
-          />
-          <UploadImegePreview
-            src={ImgPreview[5] ? ImgPreview[5] : DefaultImega}
-            alt=""
-          />
-          <UploadImegePreview
-            src={ImgPreview[6] ? ImgPreview[6] : DefaultImega}
-            alt=""
-          />
-          <UploadImegePreview
-            src={ImgPreview[7] ? ImgPreview[7] : DefaultImega}
-            alt=""
-          />
-          <UploadImegePreview
-            src={ImgPreview[8] ? ImgPreview[8] : DefaultImega}
-            alt=""
-          />
-          <UploadImegePreview
-            src={ImgPreview[9] ? ImgPreview[9] : DefaultImega}
-            alt=""
-          />
+          {formoon.map((e, i) => (
+            <UploadImegePreview
+              key={i}
+              src={ImgPreview[i]?.ImgURL ? ImgPreview[i]?.ImgURL : DefaultImega}
+              alt=""
+              onClick={Imageremove}
+            />
+          ))}
         </ImegePreviewBox>
         <WriteContentBox>
           <WriteContent
@@ -344,6 +372,8 @@ const UploadImegePreview = styled.img`
   width: 91px;
   height: 100px;
   object-fit: cover;
+  border-radius: 10px;
+  cursor: pointer;
 `;
 
 const PetLabel = styled.label`
