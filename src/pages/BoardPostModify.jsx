@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import AWS from "aws-sdk";
 import { __postBoard } from "../redux/modules/BoardSlice";
+import { useParams } from "react-router-dom";
+import { __getBoardDetail } from "../redux/modules/BoardSlice";
 
-const BoardWrite = () => {
+const BoardPostModify = () => {
   const dispatch = useDispatch();
   const [FileLink, setFileLink] = useState(null);
   const DefaultImega = "img/default1.jpg";
@@ -13,8 +15,36 @@ const BoardWrite = () => {
   const [contents, setcontents] = useState();
   const [Cate, setCate] = useState("0");
   const formoon = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const id = useParams();
 
+  const post = useSelector((state) => state.BoardSlice.post);
+  const isLoading = useSelector((state) => state.BoardSlice.isLoading);
+
+  console.log(id);
+  console.log(post);
+  console.log(isLoading);
   console.log(ImgPreview.length);
+  console.log(post?.local);
+
+  switch (post?.local) {
+    case "수도권":
+  }
+
+  useEffect(() => {
+    dispatch(__getBoardDetail(id));
+  }, []);
+
+  useEffect(() => {
+    if (post) {
+      setcontents({
+        title: post?.title,
+        content: post?.content,
+        local: post?.local,
+        localdetail: post?.localdetail,
+        pet: post?.Pet,
+      });
+    }
+  }, [post]);
 
   // 이미지
 
@@ -120,16 +150,6 @@ const BoardWrite = () => {
     setImgPreview(ImgPreview.filter((el) => el.imgURL !== e.target.src));
   };
 
-  // console.log(
-  //   contents?.title,
-  //   contents?.content,
-  //   contents?.category1,
-  //   contents?.category2,
-  //   ImgPreview,
-  //   Pet
-  // );
-
-  console.log(ImgPreview);
   return (
     <BoardWriteContainer onSubmit={onSubmitHandler}>
       <BoardWriteWrap>
@@ -139,6 +159,7 @@ const BoardWrite = () => {
             type="text"
             placeholder="제목을 입력해주세요."
             maxLength="30"
+            value={contents?.title || ""}
             required
             onChange={onChangeDataHandler}
           />
@@ -161,6 +182,7 @@ const BoardWrite = () => {
               <CategorySelect
                 name="category1"
                 id="cate_parent"
+                value={contents?.local}
                 onChange={Categoryopen}
               >
                 <option name="category1" value="0">
@@ -185,6 +207,7 @@ const BoardWrite = () => {
               <CategorySelect
                 name="category2"
                 id="cate_child"
+                value={contents?.localdetail}
                 onChange={onCategoryHandler}
                 required
               >
@@ -321,7 +344,12 @@ const BoardWrite = () => {
                 )}
               </CategorySelect>
               <PetCheckBox>
-                <PetCheck type="checkbox" id="pet" onChange={PetHandler} />
+                <PetCheck
+                  type="checkbox"
+                  id="pet"
+                  checked={false}
+                  onChange={PetHandler}
+                />
                 <PetLabel htmlFor="pet">반려동물</PetLabel>
               </PetCheckBox>
             </CategoryBox>
@@ -341,6 +369,7 @@ const BoardWrite = () => {
           <WriteContent
             name="content"
             id=""
+            value={contents?.content}
             cols="30"
             rows="10"
             placeholder="내용을 입력해 주세요."
@@ -357,8 +386,7 @@ const BoardWrite = () => {
   );
 };
 
-export default BoardWrite;
-
+export default BoardPostModify;
 const ImegePreviewBox = styled.div`
   width: 100%;
   height: 100px;

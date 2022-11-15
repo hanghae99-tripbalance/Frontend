@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import "swiper/css";
 import "swiper/css/effect-fade";
@@ -9,20 +9,43 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade, Navigation, Pagination } from "swiper";
 import "./BoardPostDetail.css";
 import { __postComment } from "../redux/modules/BoardSlice";
+import { useParams } from "react-router-dom";
+import { __getBoardDetail } from "../redux/modules/BoardSlice";
+import { __deleteBoard } from "../redux/modules/BoardSlice";
+import { useNavigate } from "react-router-dom";
 
 const BoardPostDetail = () => {
+  const navigate = useNavigate();
+  const id = useParams();
   const [comment, setcomment] = useState("");
   const [cmtcount, setcmtcount] = useState(0);
   const [Editmode, setEditmode] = useState(false);
   const [Editcomment, setEditcomment] = useState("");
+  const imagel = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const [imagelength, setimegelength] = useState(imagel);
   const dispatch = useDispatch();
+  const userNickname = localStorage.getItem("nickName");
+  console.log(userNickname);
   const ImegaURL = [
     "https://react-image-seongwoo.s3.ap-northeast-2.amazonaws.com/%EC%BD%9C%EB%A1%9C%EC%84%B8%EC%9B%80.jpg",
     "https://react-image-seongwoo.s3.ap-northeast-2.amazonaws.com/%EB%93%80%EC%98%A41.jpg",
     "https://react-image-seongwoo.s3.ap-northeast-2.amazonaws.com/EDO2.jpg",
     "https://react-image-seongwoo.s3.ap-northeast-2.amazonaws.com/456123.jpg",
   ];
-  const DefaultImega = "img/default1.jpg";
+  const DefaultImega = "../img/default1.jpg";
+
+  const post = useSelector((state) => state.BoardSlice.post);
+  const isLoading = useSelector((state) => state.BoardSlice.isLoading);
+  const nickname = localStorage.getItem("nickName");
+
+  console.log(isLoading);
+  console.log(id.id);
+
+  useEffect(() => {
+    dispatch(__getBoardDetail(id));
+  }, []);
+
+  console.log(post);
 
   const CheckLength = (e) => {
     let text = e.target.value;
@@ -46,10 +69,14 @@ const BoardPostDetail = () => {
   console.log(comment);
 
   const WriteComment = () => {
-    dispatch(__postComment({ 123: 123 }));
+    dispatch(__postComment({ id, content: comment }));
   };
-  const modifyPost = () => {};
-  const DeletePost = () => {};
+  const modifyPost = () => {
+    navigate(`/modify/${id.id}`);
+  };
+  const DeletePost = () => {
+    dispatch(__deleteBoard(id));
+  };
   const DeleteComment = () => {};
 
   const ModifyCancel = () => {
@@ -84,77 +111,54 @@ const BoardPostDetail = () => {
               className="mySwiper"
               loop={true}
             >
-              {ImegaURL.map((item, idx) => {
-                return (
-                  <SwiperSlide key={idx}>
-                    <SliderImage src={ImegaURL[idx]} />
-                  </SwiperSlide>
-                );
-              })}
+              {post &&
+                post?.mediaList.map((item, idx) => {
+                  return (
+                    <SwiperSlide key={idx}>
+                      <SliderImage src={item} />
+                    </SwiperSlide>
+                  );
+                })}
             </Swiper>
           </ImegeSlide>
           <ImegePreview>
-            <PreviewItem
-              src={ImegaURL[0] ? ImegaURL[0] : DefaultImega}
-              alt=""
-            />
-            <PreviewItem
-              src={ImegaURL[1] ? ImegaURL[1] : DefaultImega}
-              alt=""
-            />
-            <PreviewItem
-              src={ImegaURL[2] ? ImegaURL[2] : DefaultImega}
-              alt=""
-            />
-            <PreviewItem
-              src={ImegaURL[3] ? ImegaURL[3] : DefaultImega}
-              alt=""
-            />
-            <PreviewItem
-              src={ImegaURL[4] ? ImegaURL[4] : DefaultImega}
-              alt=""
-            />
-            <PreviewItem
-              src={ImegaURL[5] ? ImegaURL[5] : DefaultImega}
-              alt=""
-            />
-            <PreviewItem
-              src={ImegaURL[6] ? ImegaURL[6] : DefaultImega}
-              alt=""
-            />
-            <PreviewItem
-              src={ImegaURL[7] ? ImegaURL[7] : DefaultImega}
-              alt=""
-            />
-            <PreviewItem
-              src={ImegaURL[8] ? ImegaURL[8] : DefaultImega}
-              alt=""
-            />
-            <PreviewItem
-              src={ImegaURL[9] ? ImegaURL[9] : DefaultImega}
-              alt=""
-            />
+            {post &&
+              imagelength.map((el, idx) => (
+                <PreviewItem
+                  key={idx}
+                  src={
+                    post?.mediaList[idx] ? post?.mediaList[idx] : DefaultImega
+                  }
+                  alt=""
+                />
+              ))}
           </ImegePreview>
         </ImegeWrap>
         <BoardTitleWrap>
-          <BoardTitle>안녕 나 제목이야</BoardTitle>
+          <BoardTitle>{post?.title}</BoardTitle>
           <TitleButtonWarp>
-            <ModifyButton onClick={modifyPost}>수정</ModifyButton>
-            <DeleteButton onClick={DeletePost}>삭제</DeleteButton>
+            {userNickname == post?.nickName ? (
+              <>
+                <ModifyButton onClick={modifyPost}>수정</ModifyButton>
+                <DeleteButton onClick={DeletePost}>삭제</DeleteButton>
+              </>
+            ) : null}
           </TitleButtonWarp>
         </BoardTitleWrap>
-        <BoardCateGory>제주도 서귀포</BoardCateGory>
-        <BoardBody>
-          안녕 난 내용이야 안녕 난 내용이야 안녕 난 내용이야 안녕 난 내용이야
-          안녕 난 내용이야
-        </BoardBody>
+        <UserNameBox>
+          <PostUser>{post?.nickName}</PostUser>
+          <BoardCateGory>
+            지역명 : {post?.local} {post?.localdetail}
+          </BoardCateGory>
+        </UserNameBox>
+        <BoardBody>{post?.content}</BoardBody>
         <BoardLike>
-          <BoardLikeImage src="img/heart.svg" alt="" />
+          <BoardLikeImage src="../img/heart.svg" alt="" />
           <BoardLikeCount>0</BoardLikeCount>
         </BoardLike>
         <BoardCommentWrap>
           <BoardCommentBox>
-            <CommentWriteUser>유저 닉네임</CommentWriteUser>
+            <CommentWriteUser>{nickname}</CommentWriteUser>
             <CommentTextarea
               name=""
               maxLength="200"
@@ -206,6 +210,16 @@ const BoardPostDetail = () => {
 };
 
 export default BoardPostDetail;
+
+const PostUser = styled.div`
+  font-size: 18px;
+`;
+
+const UserNameBox = styled.div`
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+`;
 
 const CommentModifyinput = styled.input`
   width: 100%;

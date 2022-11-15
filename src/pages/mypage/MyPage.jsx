@@ -1,7 +1,16 @@
 import React from 'react'
+import Layout from '../../component/Layout'
+import Header from '../../component/Header'
+import Footer from '../../component/Footer'
+import MyPageView from '../../components/mypage/MyPageView'
+
 
 export default function MyPage() {
   return (
-    <div>MyPage</div>
+    <Layout>
+      <Header/>
+        <MyPageView/>
+      <Footer/>
+    </Layout>
   )
 }
