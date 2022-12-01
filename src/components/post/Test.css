@@ -1,0 +1,187 @@
+@font-face {
+  font-family: "NexonLv2Gothic";
+  font-weight: 300;
+  font-style: normal;
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/NexonLv2Gothic/NexonLv2GothicLight.eot");
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/NexonLv2Gothic/NexonLv2GothicLight.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/NexonLv2Gothic/NexonLv2GothicLight.woff2")
+      format("woff2"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/NexonLv2Gothic/NexonLv2GothicLight.woff")
+      format("woff"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/NexonLv2Gothic/NexonLv2GothicLight.ttf")
+      format("truetype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "NexonLv2Gothic";
+  font-weight: 400;
+  font-style: normal;
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/NexonLv2Gothic/NexonLv2GothicRegular.eot");
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/NexonLv2Gothic/NexonLv2GothicRegular.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/NexonLv2Gothic/NexonLv2GothicRegular.woff2")
+      format("woff2"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/NexonLv2Gothic/NexonLv2GothicRegular.woff")
+      format("woff"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/NexonLv2Gothic/NexonLv2GothicRegular.ttf")
+      format("truetype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "NexonLv2Gothic";
+  font-weight: 500;
+  font-style: normal;
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/NexonLv2Gothic/NexonLv2GothicMedium.eot");
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/NexonLv2Gothic/NexonLv2GothicMedium.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/NexonLv2Gothic/NexonLv2GothicMedium.woff2")
+      format("woff2"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/NexonLv2Gothic/NexonLv2GothicMedium.woff")
+      format("woff"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/NexonLv2Gothic/NexonLv2GothicMedium.ttf")
+      format("truetype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "NexonLv2Gothic";
+  font-weight: 700;
+  font-style: normal;
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/NexonLv2Gothic/NexonLv2GothicBold.eot");
+  src: url("https://cdn.jsdelivr.net/gh/webfontworld/NexonLv2Gothic/NexonLv2GothicBold.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/NexonLv2Gothic/NexonLv2GothicBold.woff2")
+      format("woff2"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/NexonLv2Gothic/NexonLv2GothicBold.woff")
+      format("woff"),
+    url("https://cdn.jsdelivr.net/gh/webfontworld/NexonLv2Gothic/NexonLv2GothicBold.ttf")
+      format("truetype");
+  font-display: swap;
+}
+
+.main {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "NexonLv2Gothic";
+}
+
+.banner_inner {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.banner {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.one,
+.two,
+.three {
+  width: 100%;
+  height: 100%;
+}
+
+.banner:first-child {
+  opacity: 1;
+}
+
+.one {
+  background-color: #65ae7e;
+}
+
+.two {
+  background-color: #ddb423;
+}
+.three {
+  background-color: #c76091;
+}
+
+.main_board {
+  padding: 250px 250px 250px 150px;
+  display: flex;
+}
+
+.mainboard_title,
+.mainboard_title2,
+.mainboard_title3 {
+  font-weight: 700;
+  font-size: 70px;
+  color: #fff;
+  opacity: 0;
+}
+.mainboard_titleshadow,
+.mainboard_titleshadow2,
+.mainboard_titleshadow3 {
+  font-weight: 700;
+  font-size: 40px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 5px;
+  opacity: 0;
+}
+.mainboard_body,
+.mainboard_body2,
+.mainboard_body3 {
+  font-weight: 400;
+  font-size: 30px;
+  color: #fff;
+  margin-top: 50px;
+  opacity: 0;
+}
+.mainboard_btn,
+.mainboard_btn2,
+.mainboard_btn3 {
+  margin-top: 120px;
+  color: #fff;
+  background-color: #333;
+  padding: 10px 20px;
+  font-size: 20px;
+  opacity: 0;
+}
+
+.mainboard_imgbox {
+  margin-left: 200px;
+  position: relative;
+}
+.mainboard_imgbox2 {
+  margin-left: 280px;
+  position: relative;
+}
+.mainboard_imgbox3 {
+  margin-left: 500px;
+  position: relative;
+}
+.mainboard_img,
+.mainboard_img2,
+.mainboard_img3 {
+  position: absolute;
+  top: -200px;
+  left: -30px;
+  width: 500px;
+  height: 500px;
+  z-index: 2;
+  opacity: 0;
+}
+.mainboard_img img,
+.mainboard_img2 img,
+.mainboard_img3 img {
+  width: 100%;
+  height: 100%;
+}
+.mainboard_imgshadow,
+.mainboard_imgshadow2,
+.mainboard_imgshadow3 {
+  position: absolute;
+  top: 30px;
+  left: 0px;
+  width: 500px;
+  height: 500px;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+}

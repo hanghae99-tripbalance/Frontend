@@ -14,6 +14,7 @@ import KaKao from "../../components/login/KaKao";
 
 import Signup from "../../components/login/Signup";
 import MemberPage from "../../pages/memberPage/MemberPage";
+import TestSlide from "../../components/post/TestSlide";
 
 // import Test from "../../pages/Test";
 const Router = () => {
@@ -34,6 +35,7 @@ const Router = () => {
         <Route path="/game/:aa/:id" element={<Game />} />
         <Route path="/gameResult/:aa/:id" element={<GameResult />} />
         <Route path="/tb/ouath/kakao" element={<KaKao />} />
+        <Route path="/s" element={<TestSlide />} />
       </Routes>
     </BrowserRouter>
   );

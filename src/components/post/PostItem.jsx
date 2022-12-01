@@ -123,150 +123,154 @@ const PostItem = () => {
 
   return (
     <>
-     {modal ? (
+      {modal ? (
         <>
           <LoginPage />
           <PostPageContainer>
-      <TodayTitle>오늘의 여행지 검색</TodayTitle>
-      <SearchBox>
-        <SearchBoxForm onSubmit={getSearch}>
-          <CategorySearch onChange={getCategory}>
-            <option value="0">전체</option>
-            <option value="1">수도권</option>
-            <option value="2">강원도 + 경상도</option>
-            <option value="3">충청도 + 전라도</option>
-            <option value="4">제주도</option>
-            <option value="5">기타</option>
-          </CategorySearch>
-          <TitleSearchbox>
-            <TitleSearch
-              type="text"
-              placeholder="오늘의 핫한 여행지 검색하기"
-              value={useInput}
-              onChange={onChange}
-            ></TitleSearch>
-            <SearchIcon></SearchIcon>
-          </TitleSearchbox>
-        </SearchBoxForm>
-        <PostgoWrite onClick={goPosrWrite}>게시글 작성</PostgoWrite>
-      </SearchBox>
-      <PostLikeBestbox>
-        <PostBestfive best={best} />
-      </PostLikeBestbox>
-      <PostListWrap>
-        <PostListTitle type="submit">TB 추천여행지</PostListTitle>
-        <PostCardList>
-          {posts &&
-            posts.map((item, idx) => (
-              <CardWrap
-                key={idx}
-                search={posts}
-                onClick={() => {
-                  goDetail(item.postId);
-                }}
-              >
-                <CardImgbox>
-                  <CardImg src={item.image[0].imgURL} />
-                </CardImgbox>
-                <CardTextbox>
-                  <CardTitle>{item.title}</CardTitle>
-                  <Cardbody>
-                    <Userinfo>
-                      <UserImg
-                        src={
-                          item.profileImg ? item.profileImg : profiledefaultImg
-                        }
-                      />
-                      <CardUserName>{item.author}</CardUserName>
-                    </Userinfo>
-                    <Likeinfo>
-                      <LikeCount>{item.heartNum}</LikeCount>
-                      <LikeImg src="img/heart.svg" />
-                    </Likeinfo>
-                  </Cardbody>
-                </CardTextbox>
-              </CardWrap>
-            ))}
-        </PostCardList>
-      </PostListWrap>
-      <Viewbox>
-        {test ? <div ref={ref}>{isLast ? "" : <Loading2 />}</div> : null}
-      </Viewbox>
-    </PostPageContainer>
+            <TodayTitle>오늘의 여행지 검색</TodayTitle>
+            <SearchBox>
+              <SearchBoxForm onSubmit={getSearch}>
+                <CategorySearch onChange={getCategory}>
+                  <option value="0">전체</option>
+                  <option value="1">수도권</option>
+                  <option value="2">강원도 + 경상도</option>
+                  <option value="3">충청도 + 전라도</option>
+                  <option value="4">제주도</option>
+                  <option value="5">기타</option>
+                </CategorySearch>
+                <TitleSearchbox>
+                  <TitleSearch
+                    type="text"
+                    placeholder="오늘의 핫한 여행지 검색하기"
+                    value={useInput}
+                    onChange={onChange}
+                  ></TitleSearch>
+                  <SearchIcon></SearchIcon>
+                </TitleSearchbox>
+              </SearchBoxForm>
+              <PostgoWrite onClick={goPosrWrite}>게시글 작성</PostgoWrite>
+            </SearchBox>
+            <PostLikeBestbox>
+              <PostBestfive best={best} />
+            </PostLikeBestbox>
+            <PostListWrap>
+              <PostListTitle type="submit">TB 추천여행지</PostListTitle>
+              <PostCardList>
+                {posts &&
+                  posts.map((item, idx) => (
+                    <CardWrap
+                      key={idx}
+                      search={posts}
+                      onClick={() => {
+                        goDetail(item.postId);
+                      }}
+                    >
+                      <CardImgbox>
+                        <CardImg src={item.image[0].imgURL} />
+                      </CardImgbox>
+                      <CardTextbox>
+                        <CardTitle>{item.title}</CardTitle>
+                        <Cardbody>
+                          <Userinfo>
+                            <UserImg
+                              src={
+                                item.profileImg
+                                  ? item.profileImg
+                                  : profiledefaultImg
+                              }
+                            />
+                            <CardUserName>{item.author}</CardUserName>
+                          </Userinfo>
+                          <Likeinfo>
+                            <LikeCount>{item.heartNum}</LikeCount>
+                            <LikeImg src="img/heart.svg" />
+                          </Likeinfo>
+                        </Cardbody>
+                      </CardTextbox>
+                    </CardWrap>
+                  ))}
+              </PostCardList>
+            </PostListWrap>
+            <Viewbox>
+              {test ? <div ref={ref}>{isLast ? "" : <Loading2 />}</div> : null}
+            </Viewbox>
+          </PostPageContainer>
         </>
       ) : (
-    <PostPageContainer>
-      <TodayTitle>오늘의 여행지 검색</TodayTitle>
-      <SearchBox>
-        <SearchBoxForm onSubmit={getSearch}>
-          <CategorySearch onChange={getCategory}>
-            <option value="0">전체</option>
-            <option value="1">수도권</option>
-            <option value="2">강원도 + 경상도</option>
-            <option value="3">충청도 + 전라도</option>
-            <option value="4">제주도</option>
-            <option value="5">기타</option>
-          </CategorySearch>
-          <TitleSearchbox>
-            <TitleSearch
-              type="text"
-              placeholder="오늘의 핫한 여행지 검색하기"
-              value={useInput}
-              onChange={onChange}
-            ></TitleSearch>
-            <SearchIcon></SearchIcon>
-          </TitleSearchbox>
-        </SearchBoxForm>
-        <PostgoWrite onClick={goPosrWrite}>게시글 작성</PostgoWrite>
-      </SearchBox>
-      <PostLikeBestbox>
-        <PostBestfive best={best} />
-      </PostLikeBestbox>
-      <PostListWrap>
-        <PostListTitle type="submit">TB 추천여행지</PostListTitle>
-        <PostCardList>
-          {posts &&
-            posts.map((item, idx) => (
-              <CardWrap
-                key={idx}
-                search={posts}
-                onClick={() => {
-                  goDetail(item.postId);
-                }}
-              >
-                <CardImgbox>
-                  <CardImg src={item.image[0].imgURL} />
-                </CardImgbox>
-                <CardTextbox>
-                  <CardTitle>{item.title}</CardTitle>
-                  <Cardbody>
-                    <Userinfo>
-                      <UserImg
-                        src={
-                          item.profileImg ? item.profileImg : profiledefaultImg
-                        }
-                      />
-                      <CardUserName>{item.author}</CardUserName>
-                    </Userinfo>
-                    <Likeinfo>
-                      <LikeCount>{item.heartNum}</LikeCount>
-                      <LikeImg src="img/heart.svg" />
-                    </Likeinfo>
-                  </Cardbody>
-                </CardTextbox>
-              </CardWrap>
-            ))}
-        </PostCardList>
-      </PostListWrap>
-      <Viewbox>
-        {test ? (
-          <div ref={ref}>
-            <Loading2 />
-          </div>
-        ) : null}
-      </Viewbox>
-    </PostPageContainer>
-    )}
+        <PostPageContainer>
+          <TodayTitle>오늘의 여행지 검색</TodayTitle>
+          <SearchBox>
+            <SearchBoxForm onSubmit={getSearch}>
+              <CategorySearch onChange={getCategory}>
+                <option value="0">전체</option>
+                <option value="1">수도권</option>
+                <option value="2">강원도 + 경상도</option>
+                <option value="3">충청도 + 전라도</option>
+                <option value="4">제주도</option>
+                <option value="5">기타</option>
+              </CategorySearch>
+              <TitleSearchbox>
+                <TitleSearch
+                  type="text"
+                  placeholder="오늘의 핫한 여행지 검색하기"
+                  value={useInput}
+                  onChange={onChange}
+                ></TitleSearch>
+                <SearchIcon></SearchIcon>
+              </TitleSearchbox>
+            </SearchBoxForm>
+            <PostgoWrite onClick={goPosrWrite}>게시글 작성</PostgoWrite>
+          </SearchBox>
+          <PostLikeBestbox>
+            <PostBestfive best={best} />
+          </PostLikeBestbox>
+          <PostListWrap>
+            <PostListTitle type="submit">TB 추천여행지</PostListTitle>
+            <PostCardList>
+              {posts &&
+                posts.map((item, idx) => (
+                  <CardWrap
+                    key={idx}
+                    search={posts}
+                    onClick={() => {
+                      goDetail(item.postId);
+                    }}
+                  >
+                    <CardImgbox>
+                      <CardImg src={item.image[0].imgURL} />
+                    </CardImgbox>
+                    <CardTextbox>
+                      <CardTitle>{item.title}</CardTitle>
+                      <Cardbody>
+                        <Userinfo>
+                          <UserImg
+                            src={
+                              item.profileImg
+                                ? item.profileImg
+                                : profiledefaultImg
+                            }
+                          />
+                          <CardUserName>{item.author}</CardUserName>
+                        </Userinfo>
+                        <Likeinfo>
+                          <LikeCount>{item.heartNum}</LikeCount>
+                          <LikeImg src="img/heart.svg" />
+                        </Likeinfo>
+                      </Cardbody>
+                    </CardTextbox>
+                  </CardWrap>
+                ))}
+            </PostCardList>
+          </PostListWrap>
+          <Viewbox>
+            {test ? (
+              <div ref={ref}>
+                <Loading2 />
+              </div>
+            ) : null}
+          </Viewbox>
+        </PostPageContainer>
+      )}
     </>
   );
 };

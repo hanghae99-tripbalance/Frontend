@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Carousel from "react-material-ui-carousel";
 import blue from "../../../img/blue.jpg";
 import bblue from "../../../img/bblue.jpg";
@@ -25,6 +25,7 @@ import {
   Balancce,
 } from "./Banner";
 import { Link } from "react-router-dom";
+
 function Home(props) {
   return (
     <Carousel

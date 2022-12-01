@@ -162,7 +162,7 @@ const BoardPostDetail = () => {
       sliderInner.appendChild(cloneFirst);
       sliderInner.insertBefore(cloneLast, sliderFirst);
 
-      //닷 메뉴 셋탕
+      //닷 메뉴 셋
       function dotInit() {
         for (let i = 0; i < sliderLength; i++) {
           dotIndex += "<div class='dot'></div>";

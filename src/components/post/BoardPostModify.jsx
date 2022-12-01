@@ -3,7 +3,10 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import AWS from "aws-sdk";
 import { useParams } from "react-router-dom";
-import { __getBoardDetail, __modifyBoard } from "../../redux/modules/BoardSlice";
+import {
+  __getBoardDetail,
+  __modifyBoard,
+} from "../../redux/modules/BoardSlice";
 import Loading from "../Loading/Loading";
 
 const BoardPostModify = () => {
@@ -229,8 +232,8 @@ const BoardPostModify = () => {
   //AWS S3 이미지 업로드 도전
 
   const onFileUpload = async (e) => {
-    const ACCESS_KEY = "AKIAXQKS7DPZ7R5C4WNA";
-    const SECRET_ACCESS_KEY = "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";
+    const ACCESS_KEY = process.env.ACCESS_KEY;
+    const SECRET_ACCESS_KEY = process.env.SECRET_ACCESS_KEY;
     const REGION = "ap-northeast-2";
     const S3_BUCKET = "react-image-seongwoo";
 
