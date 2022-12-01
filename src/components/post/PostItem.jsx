@@ -66,7 +66,7 @@ const PostItem = () => {
 
   console.log("번호확인", search);
 
-  //일반검색 인피니티
+  //일반검색 인피니티입니다.
   useEffect(() => {
     if (posts !== 0 && inView) {
       if (isLast == false && search == 1) {
@@ -192,7 +192,11 @@ const PostItem = () => {
               </PostCardList>
             </PostListWrap>
             <Viewbox>
-              {test ? <div ref={ref}>{isLast ? "" : <Loading2 />}</div> : null}
+              {test ? (
+                <div ref={ref}>
+                  {isLast ? "더이상 글이없습니다" : <Loading2 />}
+                </div>
+              ) : null}
             </Viewbox>
           </PostPageContainer>
         </>
@@ -265,7 +269,7 @@ const PostItem = () => {
           <Viewbox>
             {test ? (
               <div ref={ref}>
-                <Loading2 />
+                {isLast ? "더이상 글이없습니다" : <Loading2 />}
               </div>
             ) : null}
           </Viewbox>
