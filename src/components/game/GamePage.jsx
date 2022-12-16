@@ -13,7 +13,7 @@ export default function GamePage() {
   const dispatch = useDispatch();
 
   const gameData = useSelector((state) => state.gameInfo.data)
-
+  //test
   const goFirst = (e) => {
     e.preventDefault();
     navigate("/start");
