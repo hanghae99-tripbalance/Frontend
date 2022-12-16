@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <h1><b>🏝Trip Balane🏝</b></h3>
 <h3>여행을 가고싶은데 어디로 갈지 모르겠다면,</h3>
 <h3>밸런스 게임을 통해서 정해보세요!</h3>
@@ -210,3 +211,6 @@ lighthouse를이용해서 성능측정 결과 및접근성,권장사항 점수�
 <img src="https://user-images.githubusercontent.com/77573910/207362891-0eb7e051-cc86-468b-9cb9-15f4886dd455.gif" width="600" height="300">
 
 -------
+=======
+
+>>>>>>> ebe5d662bc95c39f2dd4ecaefe2c58a0c1b84b66
