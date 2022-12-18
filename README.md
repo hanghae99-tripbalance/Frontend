@@ -54,7 +54,7 @@ Component 단위의 작성을 통해 UI를 구성하는 개별적인 view단위�
 </details>
 
 <details>
-<summary> Redux-Toolkik </summary>
+<summary> Redux-Toolkit </summary>
 <div markdown="1">	
 <br>
 </div>
