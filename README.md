@@ -224,6 +224,4 @@ lighthouse를이용해서 성능측정 결과 및접근성,권장사항 점수�
 <img src="https://user-images.githubusercontent.com/77573910/207362891-0eb7e051-cc86-468b-9cb9-15f4886dd455.gif" width="600" height="300">
 
 -------
-=======
-
 
